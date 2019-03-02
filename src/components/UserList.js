@@ -17,6 +17,26 @@ class UserListContainer extends React.Component {
   }
 }
 
+// todo move this into another file as part of a selector and unit test
+function getDisplayName(first, last) {
+  // this function really isn't applicable to possible mistakes in the name fields, but
+  // in the malformed data I saw form the API, it would fix the last and first names because
+  // the last names aren't multiple words in those cases
+
+  // an example I found was "José Luis Rojas" in a single JSON property which this will convert to "Rojas, José Luis"
+
+  if (first && last) {
+    return `${last}, ${first}`
+  }
+
+  const fullKnownName = `${first}${last}`
+  const wordsInName = fullKnownName.trim().split(' ')
+  const likelyLastName = wordsInName[wordsInName.length - 1]
+  const likelyFirstAndMiddle = wordsInName.slice(0, wordsInName.length - 1).join(' ')
+
+  return `${likelyLastName}, ${likelyFirstAndMiddle}`
+}
+
 function UserList({filteredUsers, isLoading, error}) {
   if (isLoading) {
     return <h1>Loading</h1>
@@ -47,7 +67,7 @@ function UserList({filteredUsers, isLoading, error}) {
               <td>
                 <Image src={user.photo} roundedCircle/>
               </td>
-              <td>{user.surname}, {user.name}</td>
+              <td>{getDisplayName(user.name, user.surname)}</td>
               <td>{user.gender}</td>
               <td>{user.region}</td>
               <td>
