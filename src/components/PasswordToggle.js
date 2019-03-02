@@ -15,11 +15,6 @@ export default class PasswordToggle extends  React.Component {
   }
 
   render() {
-    if (!this.state) {
-      return <h6>oh</h6>
-    }
     return  <span onClick={this.toggle}>{this.state.passwordVisible ? this.props.password: "•••••"}</span>;
   }
 }
-
-
