@@ -29,7 +29,7 @@ function PasswordToggle({password, passwordVisible, toggle}) {
     <Container className={"password-toggle"}>
       <Row>
         <Col>
-          <Form.Control type={passwordVisible ? "text" : "password"} value={passwordVisible ? password : "--------"} readonly/>
+          <Form.Control type={passwordVisible ? "text" : "password"} value={passwordVisible ? password : "--------"} readOnly/>
         </Col>
       </Row>
       <Row>
