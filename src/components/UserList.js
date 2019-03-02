@@ -2,6 +2,7 @@ import React  from 'react';
 import {getUsers} from '../actions/usersActions';
 import {connect} from 'react-redux';
 import PasswordToggle from './PasswordToggle'
+import {Table} from 'react-bootstrap'
 
 class UserListContainer extends React.Component {
   componentDidMount() {
@@ -25,9 +26,10 @@ function UserList({users, isLoading, error}) {
   }
 
   return (
-    <table>
+    <Table striped className="user-table">
       <thead>
       <tr>
+        <th>Photo</th>
         <th>Last Name</th>
         <th>First Name</th>
         <th>Gender</th>
@@ -35,13 +37,14 @@ function UserList({users, isLoading, error}) {
         <th>Phone</th>
         <th>Email</th>
         <th>Password</th>
-        <th>Photo</th>
       </tr>
       </thead>
       <tbody>
       {
         users.map((user, index) => (
           <tr key={index}>
+            {/*todo add photo alt when adding a selector to fix some data problems*/}
+            <td><img src={user.photo} /></td>
             <td>{user.surname}</td>
             <td>{user.name}</td>
             <td>{user.gender}</td>
@@ -49,12 +52,11 @@ function UserList({users, isLoading, error}) {
             <td>{user.phone}</td>
             <td>{user.email}</td>
             <td><PasswordToggle password={user.password} /></td>
-            <td><img src={user.photo} /></td>
           </tr>
         ))
       }
       </tbody>
-    </table>
+    </Table>
   )
 
 
