@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import {getUsers} from '../actions/usersActions';
 import {connect} from 'react-redux';
 import PasswordToggle from './PasswordToggle'
@@ -44,14 +44,14 @@ function UserList({users, isLoading, error}) {
           <tr key={index}>
             {/*todo add photo alt when adding a selector to fix some data problems*/}
             <td>
-              <Image src={user.photo} roundedCircle />
+              <Image src={user.photo} roundedCircle/>
             </td>
             <td>{user.surname}, {user.name}</td>
             <td>{user.gender}</td>
             <td>{user.region}</td>
             <td>{user.phone}</td>
-            <td>{user.email}</td>
-            <td><PasswordToggle password={user.password} /></td>
+            <td><a href={'mailto:' + user.email} >{user.email}</a></td>
+            <td><PasswordToggle password={user.password}/></td>
           </tr>
         ))
       }
