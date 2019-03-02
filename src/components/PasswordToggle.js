@@ -1,5 +1,5 @@
 import React  from 'react';
-import {Button, Col, Container, Row} from 'react-bootstrap';
+import {Button, Col, Container, Form, Row} from 'react-bootstrap';
 
 export default class PasswordToggleContainer extends  React.Component {
   constructor() {
@@ -29,7 +29,7 @@ function PasswordToggle({password, passwordVisible, toggle}) {
     <Container className={"password-toggle"}>
       <Row>
         <Col>
-          <input type={passwordVisible ? "text" : "password"} value={passwordVisible ? password : "--------"} readonly/>
+          <Form.Control type={passwordVisible ? "text" : "password"} value={passwordVisible ? password : "--------"} readonly/>
         </Col>
       </Row>
       <Row>
