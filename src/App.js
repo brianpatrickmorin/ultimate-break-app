@@ -1,12 +1,22 @@
 import React, {Component} from 'react';
 import './App.css';
 import UserList from './components/UserList';
-import {Container, Row, Col, Jumbotron} from 'react-bootstrap';
+import {Container, Row, Col, Jumbotron, Form} from 'react-bootstrap';
 
 class App extends Component {
+  constructor() {
+    super()
+
+    this.state = {search: ''}
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(event) {
+    this.setState({search: event.target.value});
+  }
+
   render() {
     return (
-      //todo I think it would be fun to add a search that will look in phone, email, name, and region for a match and to filter the results that way
       <Container>
         <Row>
           <Col>
@@ -16,13 +26,14 @@ class App extends Component {
                 <p>
                   View and search users below.
                 </p>
+                <Form.Control type="text" placeholder="Search any field" value={this.state.search} onChange={this.handleChange}/>
               </Container>
             </Jumbotron>
           </Col>
         </Row>
         <Row>
           <Col>
-            <UserList/>
+            <UserList search={this.state.search}/>
           </Col>
         </Row>
       </Container>

@@ -11,12 +11,13 @@ class UserListContainer extends React.Component {
 
   render() {
     return <UserList
+      filteredUsers={this.props.filteredUsers}
       {...this.props.users}
     />
   }
 }
 
-function UserList({users, isLoading, error}) {
+function UserList({filteredUsers, isLoading, error}) {
   if (isLoading) {
     return <h1>Loading</h1>
   }
@@ -39,7 +40,7 @@ function UserList({users, isLoading, error}) {
       </thead>
       <tbody>
       {
-        users.map((user, index) => (
+        filteredUsers.map((user, index) => (
           <tr key={index}>
             {/*todo add photo alt when adding a selector to fix some data problems*/}
             <td>
@@ -50,7 +51,7 @@ function UserList({users, isLoading, error}) {
             <td>{user.region}</td>
             <td>
               <div>{user.phone}</div>
-              <a href={'mailto:' + user.email} >{user.email}</a>
+              <a href={'mailto:' + user.email}>{user.email}</a>
             </td>
             <td><PasswordToggle password={user.password}/></td>
           </tr>
@@ -67,8 +68,26 @@ const mapDispatchToProps = (dispatch) => ({
   onGetUsers: () => dispatch(getUsers()),
 })
 
-const mapStateToProps = (({users}) => ({
-  users
-}))
+const mapStateToProps = (({users}) => {
+  return {users}
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserListContainer)
+// todo this should use natural string comparison for upper/lower case and regional changes to characters
+function anyUserFieldContainsSearch(user, search) {
+  return ["name", "surname", "gender", "region", "email", "phone"].some(field => user[field].includes(search))
+}
+
+const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
+
+  const filteredUsers = ownProps.search && propsFromState.users.users ?
+    propsFromState.users.users.filter(u => anyUserFieldContainsSearch(u, ownProps.search)) : propsFromState.users.users
+
+  return {
+    filteredUsers,
+    ...propsFromState,
+    ...propsFromDispatch,
+    ...ownProps
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(UserListContainer)
