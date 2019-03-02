@@ -33,8 +33,7 @@ function UserList({users, isLoading, error}) {
         <th>Name</th>
         <th>Gender</th>
         <th>Region</th>
-        <th>Phone</th>
-        <th>Email</th>
+        <th>Contact</th>
         <th>Password</th>
       </tr>
       </thead>
@@ -49,8 +48,10 @@ function UserList({users, isLoading, error}) {
             <td>{user.surname}, {user.name}</td>
             <td>{user.gender}</td>
             <td>{user.region}</td>
-            <td>{user.phone}</td>
-            <td><a href={'mailto:' + user.email} >{user.email}</a></td>
+            <td>
+              <div>{user.phone}</div>
+              <a href={'mailto:' + user.email} >{user.email}</a>
+            </td>
             <td><PasswordToggle password={user.password}/></td>
           </tr>
         ))
