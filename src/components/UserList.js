@@ -72,9 +72,9 @@ const mapStateToProps = (({users}) => {
   return {users}
 })
 
-// todo this should use natural string comparison for upper/lower case and regional changes to characters
 function anyUserFieldContainsSearch(user, search) {
-  return ["name", "surname", "region", "email", "phone"].some(field => user[field].includes(search))
+  const searchLower = search.toLowerCase()
+  return ["name", "surname", "region", "email", "phone"].some(field => user[field].toLowerCase().includes(searchLower))
 }
 
 const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
