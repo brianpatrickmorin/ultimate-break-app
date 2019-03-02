@@ -2,7 +2,7 @@ import React from 'react';
 import {getUsers} from '../actions/usersActions';
 import {connect} from 'react-redux';
 import PasswordToggle from './PasswordToggle'
-import {Image, Table} from 'react-bootstrap'
+import {Image, Table, Container, Row, Col, Card} from 'react-bootstrap'
 
 class UserListContainer extends React.Component {
   componentDidMount() {
@@ -26,40 +26,58 @@ function UserList({filteredUsers, isLoading, error}) {
     return <h1>Error: {error}</h1>
   }
 
-  return (
-    <Table striped className="user-table">
-      <thead>
-      <tr>
-        <th>Photo</th>
-        <th>Name</th>
-        <th>Gender</th>
-        <th>Region</th>
-        <th>Contact</th>
-        <th>Password</th>
-      </tr>
-      </thead>
-      <tbody>
-      {
-        filteredUsers.map((user, index) => (
-          <tr key={index}>
-            {/*todo add photo alt when adding a selector to fix some data problems*/}
-            <td>
-              <Image src={user.photo} roundedCircle/>
-            </td>
-            <td>{user.surname}, {user.name}</td>
-            <td>{user.gender}</td>
-            <td>{user.region}</td>
-            <td>
-              <div>{user.phone}</div>
-              <a href={'mailto:' + user.email}>{user.email}</a>
-            </td>
-            <td><PasswordToggle password={user.password}/></td>
-          </tr>
-        ))
-      }
-      </tbody>
-    </Table>
-  )
+  return (filteredUsers.length > 0) ?
+    (
+      <Table striped className="user-table">
+        <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Region</th>
+          <th>Contact</th>
+          <th>Password</th>
+        </tr>
+        </thead>
+        <tbody>
+        {
+          filteredUsers.map((user, index) => (
+            <tr key={index}>
+              {/*todo add photo alt when adding a selector to fix some data problems*/}
+              <td>
+                <Image src={user.photo} roundedCircle/>
+              </td>
+              <td>{user.surname}, {user.name}</td>
+              <td>{user.gender}</td>
+              <td>{user.region}</td>
+              <td>
+                <div>{user.phone}</div>
+                <a href={'mailto:' + user.email}>{user.email}</a>
+              </td>
+              <td><PasswordToggle password={user.password}/></td>
+            </tr>
+          ))
+        }
+        </tbody>
+      </Table>
+    ) : (
+      <Container>
+        <Row>
+          <Col>
+          </Col>
+          <Col md={8}>
+            <Card>
+              <Card.Body>
+                <Card.Title>Oops! No Matches</Card.Title>
+                <Card.Text>Try another search.</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col>
+          </Col>
+        </Row>
+      </Container>
+    )
 
 
 }
@@ -74,7 +92,7 @@ const mapStateToProps = (({users}) => {
 
 function anyUserFieldContainsSearch(user, search) {
   const searchLower = search.toLowerCase()
-  return ["name", "surname", "region", "email", "phone"].some(field => user[field].toLowerCase().includes(searchLower))
+  return ['name', 'surname', 'region', 'email', 'phone'].some(field => user[field].toLowerCase().includes(searchLower))
 }
 
 const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
