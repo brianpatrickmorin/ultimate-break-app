@@ -2,7 +2,7 @@ import React  from 'react';
 import {getUsers} from '../actions/usersActions';
 import {connect} from 'react-redux';
 import PasswordToggle from './PasswordToggle'
-import {Table} from 'react-bootstrap'
+import {Image, Table} from 'react-bootstrap'
 
 class UserListContainer extends React.Component {
   componentDidMount() {
@@ -44,7 +44,9 @@ function UserList({users, isLoading, error}) {
         users.map((user, index) => (
           <tr key={index}>
             {/*todo add photo alt when adding a selector to fix some data problems*/}
-            <td><img src={user.photo} /></td>
+            <td>
+              <Image src={user.photo} roundedCircle />
+            </td>
             <td>{user.surname}</td>
             <td>{user.name}</td>
             <td>{user.gender}</td>
