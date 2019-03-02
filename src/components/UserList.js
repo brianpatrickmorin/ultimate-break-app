@@ -3,6 +3,7 @@ import {getUsers} from '../actions/usersActions';
 import {connect} from 'react-redux';
 import PasswordToggle from './PasswordToggle'
 import {Image, Table, Container, Row, Col, Card} from 'react-bootstrap'
+import selectUsers from '../selectors/selectUsers';
 
 class UserListContainer extends React.Component {
   componentDidMount() {
@@ -15,26 +16,6 @@ class UserListContainer extends React.Component {
       {...this.props.users}
     />
   }
-}
-
-// todo move this into another file as part of a selector and unit test
-function getDisplayName(first, last) {
-  // this function really isn't applicable to possible mistakes in the name fields, but
-  // in the malformed data I saw form the API, it would fix the last and first names because
-  // the last names aren't multiple words in those cases
-
-  // an example I found was "José Luis Rojas" in a single JSON property which this will convert to "Rojas, José Luis"
-
-  if (first && last) {
-    return `${last}, ${first}`
-  }
-
-  const fullKnownName = `${first}${last}`
-  const wordsInName = fullKnownName.trim().split(' ')
-  const likelyLastName = wordsInName[wordsInName.length - 1]
-  const likelyFirstAndMiddle = wordsInName.slice(0, wordsInName.length - 1).join(' ')
-
-  return `${likelyLastName}, ${likelyFirstAndMiddle}`
 }
 
 function UserList({filteredUsers, isLoading, error}) {
@@ -67,7 +48,7 @@ function UserList({filteredUsers, isLoading, error}) {
               <td>
                 <Image src={user.photo} roundedCircle/>
               </td>
-              <td>{getDisplayName(user.name, user.surname)}</td>
+              <td>{user.displayName}{user.isBirthdayMonth && " 🎂"}</td>
               <td>{user.gender}</td>
               <td>{user.region}</td>
               <td>
@@ -107,7 +88,12 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (({users}) => {
-  return {users}
+  return {
+    usersState: {
+      ...users,
+      users: selectUsers(users.users)
+    }
+  }
 })
 
 function anyUserFieldContainsSearch(user, search) {
@@ -117,8 +103,8 @@ function anyUserFieldContainsSearch(user, search) {
 
 const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
 
-  const filteredUsers = ownProps.search && propsFromState.users.users ?
-    propsFromState.users.users.filter(u => anyUserFieldContainsSearch(u, ownProps.search)) : propsFromState.users.users
+  const filteredUsers = ownProps.search && propsFromState.usersState.users ?
+    propsFromState.usersState.users.filter(u => anyUserFieldContainsSearch(u, ownProps.search)) : propsFromState.usersState.users
 
   return {
     filteredUsers,
