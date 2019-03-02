@@ -1,6 +1,6 @@
 import React  from 'react';
 
-export default class PasswordToggle extends  React.Component {
+export default class PasswordToggleContainer extends  React.Component {
   constructor() {
     super()
 
@@ -15,6 +15,15 @@ export default class PasswordToggle extends  React.Component {
   }
 
   render() {
-    return  <span onClick={this.toggle}>{this.state.passwordVisible ? this.props.password: "•••••"}</span>;
+    return <PasswordToggle
+      password={this.props.password}
+      passwordVisible={this.state.passwordVisible}
+      toggle={this.toggle}
+    />
   }
+}
+
+function PasswordToggle({password, passwordVisible, toggle}) {
+  return  <span onClick={toggle}>{passwordVisible ? password: "•••••"}</span>;
+
 }
