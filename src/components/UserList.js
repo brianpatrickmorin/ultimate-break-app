@@ -30,8 +30,7 @@ function UserList({users, isLoading, error}) {
       <thead>
       <tr>
         <th>Photo</th>
-        <th>Last Name</th>
-        <th>First Name</th>
+        <th>Name</th>
         <th>Gender</th>
         <th>Region</th>
         <th>Phone</th>
@@ -47,8 +46,7 @@ function UserList({users, isLoading, error}) {
             <td>
               <Image src={user.photo} roundedCircle />
             </td>
-            <td>{user.surname}</td>
-            <td>{user.name}</td>
+            <td>{user.surname}, {user.name}</td>
             <td>{user.gender}</td>
             <td>{user.region}</td>
             <td>{user.phone}</td>
