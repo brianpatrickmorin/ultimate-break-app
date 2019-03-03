@@ -22,11 +22,19 @@ class App extends Component {
           <Col>
             <Jumbotron fluid>
               <Container>
-                <h1>EF Ultimate Break Users</h1>
-                <p>
-                  View and search users below.
-                </p>
-                <Form.Control type="text" placeholder="Search any field" value={this.state.search} onChange={this.handleChange}/>
+                <Row>
+                  <Col md={4}>
+                    <img src="https://www.efultimatebreak.com/css/img/header/UB-Logo-Black.png" style={{width: "100%"}}/>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h2>
+                      View and search users below.
+                    </h2>
+                    <Form.Control type="text" placeholder="Search any field" value={this.state.search} onChange={this.handleChange}/>
+                  </Col>
+                </Row>
               </Container>
             </Jumbotron>
           </Col>
