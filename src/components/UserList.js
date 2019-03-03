@@ -13,7 +13,7 @@ class UserListContainer extends React.Component {
   render() {
     return <UserList
       filteredUsers={this.props.filteredUsers}
-      {...this.props.users}
+      {...this.props.usersState}
     />
   }
 }
