@@ -21,18 +21,15 @@ function isBirthdayMonth(rawBirthday) {
   const birthday = new Date(rawBirthday * 1000)
 
   const birthMonth = birthday.getMonth()
-  const birthDate = birthday.getDate()
 
   const today = new Date()
   const todayMonth = today.getMonth()
-  const todayDate = today.getDate()
 
   return birthMonth === todayMonth
 }
 
 
 export default function selectUsers(users) {
-  debugger;
   return users.map(user => ({
     isBirthdayMonth: isBirthdayMonth(user.birthday.raw),
     displayName: getDisplayName(user.name, user.surname),
