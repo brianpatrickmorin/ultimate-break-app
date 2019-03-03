@@ -42,12 +42,13 @@ function UserList({filteredUsers, isLoading, error}) {
         </thead>
         <tbody>
         {
+
           filteredUsers.map((user, index) => (
             <tr key={index}>
               <td>
                 <Image src={user.photo} roundedCircle alt={user.displayName}/>
               </td>
-              <td>{user.displayName}{user.isBirthdayMonth && " 🎂"}</td>
+              <td>{user.displayName}{user.isBirthdayMonth && ' 🎂'}</td>
               <td>{user.gender}</td>
               <td>{user.region}</td>
               <td>
@@ -102,8 +103,10 @@ function anyUserFieldContainsSearch(user, search) {
 
 const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
 
-  const filteredUsers = ownProps.search && propsFromState.usersState.users ?
-    propsFromState.usersState.users.filter(u => anyUserFieldContainsSearch(u, ownProps.search)) : propsFromState.usersState.users
+  const filteredUsers = (ownProps.search && propsFromState.usersState.users ?
+    propsFromState.usersState.users.filter(u => anyUserFieldContainsSearch(u, ownProps.search))
+    : propsFromState.usersState.users)
+    .sort((a, b) => (a.displayName > b.displayName) ? 1 : ((b.displayName > a.displayName) ? -1 : 0))
 
   return {
     filteredUsers,
