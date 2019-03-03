@@ -61,6 +61,12 @@ function App({search, handleChange, sortOn, setSortOn}) {
                 <Col>
                   <Button onClick={setSortOn} name="displayName" variant="link">Name</Button>
                   <Button onClick={setSortOn} name="region" variant="link">Region</Button>
+                  <Button onClick={setSortOn} name="gender" variant="link">Gender</Button>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <p>🎂: birthday month</p>
                 </Col>
               </Row>
             </Container>
