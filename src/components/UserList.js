@@ -102,11 +102,14 @@ function anyUserFieldContainsSearch(user, search) {
 }
 
 const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
-
+  const sortOn = ownProps.sortOn
   const filteredUsers = (ownProps.search && propsFromState.usersState.users ?
     propsFromState.usersState.users.filter(u => anyUserFieldContainsSearch(u, ownProps.search))
     : propsFromState.usersState.users)
-    .sort((a, b) => (a.displayName > b.displayName) ? 1 : ((b.displayName > a.displayName) ? -1 : 0))
+    .sort((a, b) => {
+      const ascendingMultipler = sortOn.ascending ? 1 : -1
+      return ((a[sortOn.field] > b[sortOn.field]) ? 1 : ((b[sortOn.field] > a[sortOn.field]) ? -1 : 0)) * ascendingMultipler;
+    })
 
   return {
     filteredUsers,
