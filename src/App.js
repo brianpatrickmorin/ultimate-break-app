@@ -16,7 +16,7 @@ class AppContainer extends Component {
   }
 
   render() {
-    return <App search={this.state.search} handleChange={this.handleChange} />
+    return <App search={this.state.search} handleChange={this.handleChange}/>
   }
 }
 
@@ -29,7 +29,11 @@ function App({search, handleChange}) {
             <Container>
               <Row>
                 <Col md={4}>
-                  <img src="https://www.efultimatebreak.com/css/img/header/UB-Logo-Black.png" style={{width: "100%"}}/>
+                  <img
+                    src="https://www.efultimatebreak.com/css/img/header/UB-Logo-Black.png"
+                    style={{width: '100%'}}
+                    alt="EF Ultimate Break"
+                  />
                 </Col>
               </Row>
               <Row>

@@ -44,9 +44,8 @@ function UserList({filteredUsers, isLoading, error}) {
         {
           filteredUsers.map((user, index) => (
             <tr key={index}>
-              {/*todo add photo alt when adding a selector to fix some data problems*/}
               <td>
-                <Image src={user.photo} roundedCircle/>
+                <Image src={user.photo} roundedCircle alt={user.displayName}/>
               </td>
               <td>{user.displayName}{user.isBirthdayMonth && " 🎂"}</td>
               <td>{user.gender}</td>
