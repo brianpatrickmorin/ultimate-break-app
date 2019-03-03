@@ -107,10 +107,11 @@ function sortByField(a, b, {field, ascending}) {
 }
 
 const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
-  const filteredUsers = (ownProps.search && propsFromState.usersState.users ?
-    propsFromState.usersState.users.filter(u => anyUserFieldContainsSearch(u, ownProps.search))
-    : propsFromState.usersState.users)
-    .sort((a, b) => sortByField(a, b, ownProps.sortOn))
+  const filteredUsers = (
+    ownProps.search && propsFromState.usersState.users ?
+      propsFromState.usersState.users.filter(u => anyUserFieldContainsSearch(u, ownProps.search))
+      : propsFromState.usersState.users
+  ).sort((a, b) => sortByField(a, b, ownProps.sortOn))
 
   return {
     filteredUsers,
