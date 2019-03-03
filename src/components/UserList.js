@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import PasswordToggle from './PasswordToggle'
 import {Image, Table, Container, Row, Col, Card} from 'react-bootstrap'
 import selectUsers from '../selectors/selectUsers';
+import filterAndSortUsers from '../selectors/filterAndSortUsers';
 
 class UserListContainer extends React.Component {
   componentDidMount() {
@@ -96,22 +97,10 @@ const mapStateToProps = (({users}) => {
   }
 })
 
-function anyUserFieldContainsSearch(user, search) {
-  const searchLower = search.toLowerCase()
-  return ['name', 'surname', 'region', 'email', 'phone'].some(field => user[field].toLowerCase().includes(searchLower))
-}
-
-function sortByField(a, b, {field, ascending}) {
-  const ascendingMultipler = ascending ? 1 : -1
-  return ((a[field] > b[field]) ? 1 : ((b[field] > a[field]) ? -1 : 0)) * ascendingMultipler;
-}
-
 const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
-  const filteredUsers = (
-    ownProps.search && propsFromState.usersState.users ?
-      propsFromState.usersState.users.filter(u => anyUserFieldContainsSearch(u, ownProps.search))
-      : propsFromState.usersState.users
-  ).sort((a, b) => sortByField(a, b, ownProps.sortOn))
+  const filteredUsers = propsFromState.usersState.users
+    ? filterAndSortUsers(propsFromState.usersState.users, ownProps.search, ownProps.sortOn)
+    : []
 
   return {
     filteredUsers,
